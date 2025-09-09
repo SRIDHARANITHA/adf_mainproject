@@ -1,0 +1,23 @@
+{
+	"name": "DS_BULK_EXCEL_ADLS_SINK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BULK_EXCEL_PARQUET_ADLS_SINK",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@concat(\n\t'bulk/',\n\tformatDateTime(utcNow(),'yyyy'),'/',\n\tformatDateTime(utcNow(),'MM'),'/',\n\tformatDateTime(utcNow(),'dd')\n)",
+					"type": "Expression"
+				}
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
