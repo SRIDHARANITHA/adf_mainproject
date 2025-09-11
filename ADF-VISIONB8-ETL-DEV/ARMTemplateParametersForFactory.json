@@ -80,6 +80,9 @@
 		"LS_SqlServerTable_source_password": {
 			"value": ""
 		},
+		"LS_AZURE_SQL_DB_LKP_CSV_password": {
+			"value": ""
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://adlsdevvbsource001.dfs.core.windows.net/"
 		},
@@ -178,6 +181,18 @@
 		},
 		"event_trigger_snowflake_properties_typeProperties_scope": {
 			"value": "/subscriptions/caedd375-418d-4b68-9353-44e1076712f2/resourceGroups/VB_DEV_B8_ETL/providers/Microsoft.Storage/storageAccounts/stroageaccountsnowflake"
+		},
+		"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_server": {
+			"value": "sql-srvr-vb-dev2.database.windows.net"
+		},
+		"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_database": {
+			"value": "sql-db-vb-dev"
+		},
+		"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_userName": {
+			"value": "access-data-dev"
+		},
+		"Tr_sample_csv_properties_PL1_MASTER_parameters_Trigger": {
+			"value": "Tr_sample_csv"
 		}
 	}
 }

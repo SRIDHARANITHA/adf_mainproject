@@ -107,6 +107,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_SqlServerTable_source'"
 		},
+		"LS_AZURE_SQL_DB_LKP_CSV_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_AZURE_SQL_DB_LKP_CSV'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
@@ -238,6 +242,22 @@
 		"event_trigger_snowflake_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/caedd375-418d-4b68-9353-44e1076712f2/resourceGroups/VB_DEV_B8_ETL/providers/Microsoft.Storage/storageAccounts/stroageaccountsnowflake"
+		},
+		"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-srvr-vb-dev2.database.windows.net"
+		},
+		"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sql-db-vb-dev"
+		},
+		"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "access-data-dev"
+		},
+		"Tr_sample_csv_properties_PL1_MASTER_parameters_Trigger": {
+			"type": "string",
+			"defaultValue": "Tr_sample_csv"
 		},
 		"containerUri": {
 			"type": "string",
@@ -428,6 +448,9 @@
 					"LS_SQLSERVER_PARQUET_SINK_accountKey": {
 						"value": "[parameters('LS_SQLSERVER_PARQUET_SINK_accountKey')]"
 					},
+					"LS_AZURE_SQL_DB_LKP_CSV_password": {
+						"value": "[parameters('LS_AZURE_SQL_DB_LKP_CSV_password')]"
+					},
 					"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_properties_typeProperties_url": {
 						"value": "[parameters('LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_properties_typeProperties_url')]"
 					},
@@ -442,6 +465,15 @@
 					},
 					"LS_SQLSERVER_PARQUET_SINK_properties_typeProperties_url": {
 						"value": "[parameters('LS_SQLSERVER_PARQUET_SINK_properties_typeProperties_url')]"
+					},
+					"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_server": {
+						"value": "[parameters('LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_server')]"
+					},
+					"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_database": {
+						"value": "[parameters('LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_database')]"
+					},
+					"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_userName": {
+						"value": "[parameters('LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -474,9 +506,6 @@
 					},
 					"LS_SqlServerTable_source_properties_typeProperties_userName": {
 						"value": "[parameters('LS_SqlServerTable_source_properties_typeProperties_userName')]"
-					},
-					"event_trigger_snowflake_properties_typeProperties_scope": {
-						"value": "[parameters('event_trigger_snowflake_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -497,6 +526,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"event_trigger_snowflake_properties_typeProperties_scope": {
+						"value": "[parameters('event_trigger_snowflake_properties_typeProperties_scope')]"
+					},
+					"Tr_sample_csv_properties_PL1_MASTER_parameters_Trigger": {
+						"value": "[parameters('Tr_sample_csv_properties_PL1_MASTER_parameters_Trigger')]"
 					}
 				}
 			},
