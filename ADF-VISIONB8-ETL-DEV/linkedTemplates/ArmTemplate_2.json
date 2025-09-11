@@ -1092,7 +1092,8 @@
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('event_trigger_snowflake_properties_typeProperties_scope')]",
 					"events": [
-						"Microsoft.Storage.BlobCreated"
+						"Microsoft.Storage.BlobCreated",
+						"Microsoft.Storage.BlobDeleted"
 					]
 				}
 			},
