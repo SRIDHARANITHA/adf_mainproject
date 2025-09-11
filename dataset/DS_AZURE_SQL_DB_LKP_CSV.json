@@ -1,0 +1,51 @@
+{
+	"name": "DS_AZURE_SQL_DB_LKP_CSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AZURE_SQL_DB_LKP_CSV",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "job_dtls_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "jobid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "dtls_key",
+				"type": "varchar"
+			},
+			{
+				"name": "dtls_value",
+				"type": "varchar"
+			},
+			{
+				"name": "created_user",
+				"type": "varchar"
+			},
+			{
+				"name": "created_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "updated_user",
+				"type": "varchar"
+			},
+			{
+				"name": "updated_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		]
+	}
+}

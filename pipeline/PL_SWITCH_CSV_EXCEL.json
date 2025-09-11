@@ -62,7 +62,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"pipeline": {
-											"referenceName": "PL_CSV",
+											"referenceName": "PL_CSV_copy1",
 											"type": "PipelineReference"
 										},
 										"waitOnCompletion": true,
