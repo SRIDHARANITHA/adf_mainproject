@@ -1,0 +1,39 @@
+{
+	"name": "DS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "geolocation_zip_code_prefix",
+				"type": "UTF8"
+			},
+			{
+				"name": "geolocation_lat",
+				"type": "UTF8"
+			},
+			{
+				"name": "geolocation_lng",
+				"type": "UTF8"
+			},
+			{
+				"name": "geolocation_city",
+				"type": "UTF8"
+			},
+			{
+				"name": "geolocation_state",
+				"type": "UTF8"
+			}
+		]
+	}
+}
