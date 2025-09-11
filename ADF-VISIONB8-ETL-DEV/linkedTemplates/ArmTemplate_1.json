@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ADF-VISIONB8-ETL-DEV"
 		},
+		"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK'"
+		},
+		"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE'"
+		},
 		"LS_SNOWFLAKE_PARQUET_SOURCE_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_SNOWFLAKE_PARQUET_SOURCE'"
@@ -22,6 +30,10 @@
 		"LS_SQLSERVER_PARQUET_SINK_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_SQLSERVER_PARQUET_SINK'"
+		},
+		"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
 		},
 		"LS_SNOWFLAKE_PARQUET_SOURCE_properties_typeProperties_database": {
 			"type": "string",
@@ -44,6 +56,36 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LS_SNOWFLAKE_PARQUET_SOURCE')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -585,102 +627,6 @@
 				]
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SNOWFLAKE_ADLS_parquet_SINK')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_SNOWFLAKE_ADLS_parquet_SINK",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@concat(\n\t'snowflake/',\n\tformatDateTime(utcNow(),'yyyy'),'/',\n\tformatDateTime(utcNow(),'MM'),'/',\n\tformatDateTime(utcNow(),'dd')\n)",
-							"type": "Expression"
-						},
-						"container": "input"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SNOWFLAKE_PARQUET_SOURCE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_SNOWFLAKE_PARQUET_SOURCE",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SnowflakeV2Table",
-				"schema": [
-					{
-						"name": "INDEX",
-						"type": "NUMBER",
-						"precision": 38,
-						"scale": 0
-					},
-					{
-						"name": "ORDER_ID",
-						"type": "VARCHAR",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "ORDER_ITEM_ID",
-						"type": "NUMBER",
-						"precision": 38,
-						"scale": 0
-					},
-					{
-						"name": "PRODUCT_ID",
-						"type": "VARCHAR",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "SELLER_ID",
-						"type": "VARCHAR",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "SHIPPING_LIMIT_DATE",
-						"type": "TIMESTAMP_NTZ",
-						"precision": 0,
-						"scale": 9
-					},
-					{
-						"name": "PRICE",
-						"type": "NUMBER",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "FREIGHT_VALUE",
-						"type": "NUMBER",
-						"precision": 10,
-						"scale": 2
-					}
-				],
-				"typeProperties": {
-					"schema": "AZURE_INTEGRATION",
-					"table": "ORDER_ITEMS_DATASET"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_SNOWFLAKE_PARQUET_SOURCE')]"
-			]
 		}
 	]
 }

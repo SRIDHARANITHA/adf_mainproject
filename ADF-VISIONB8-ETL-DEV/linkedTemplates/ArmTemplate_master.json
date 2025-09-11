@@ -79,6 +79,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_SFTP_SOURCE'"
 		},
+		"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK'"
+		},
+		"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE'"
+		},
 		"LS_SNOWFLAKE_PARQUET_SOURCE_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_SNOWFLAKE_PARQUET_SOURCE'"
@@ -195,6 +203,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'LS_SNOWFLAKE_ADLS_parquet_SINK'"
 		},
+		"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
+		},
 		"LS_SNOWFLAKE_PARQUET_SOURCE_properties_typeProperties_database": {
 			"type": "string",
 			"defaultValue": "dbazuresnow"
@@ -222,6 +234,10 @@
 		"LS_SqlServerTable_source_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "chetan"
+		},
+		"event_trigger_snowflake_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/caedd375-418d-4b68-9353-44e1076712f2/resourceGroups/VB_DEV_B8_ETL/providers/Microsoft.Storage/storageAccounts/stroageaccountsnowflake"
 		},
 		"containerUri": {
 			"type": "string",
@@ -394,6 +410,12 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_accountKey": {
+						"value": "[parameters('LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_accountKey')]"
+					},
+					"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE_connectionString": {
+						"value": "[parameters('LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE_connectionString')]"
+					},
 					"LS_SNOWFLAKE_PARQUET_SOURCE_password": {
 						"value": "[parameters('LS_SNOWFLAKE_PARQUET_SOURCE_password')]"
 					},
@@ -405,6 +427,9 @@
 					},
 					"LS_SQLSERVER_PARQUET_SINK_accountKey": {
 						"value": "[parameters('LS_SQLSERVER_PARQUET_SINK_accountKey')]"
+					},
+					"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_properties_typeProperties_url": {
+						"value": "[parameters('LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_properties_typeProperties_url')]"
 					},
 					"LS_SNOWFLAKE_PARQUET_SOURCE_properties_typeProperties_database": {
 						"value": "[parameters('LS_SNOWFLAKE_PARQUET_SOURCE_properties_typeProperties_database')]"
@@ -449,11 +474,34 @@
 					},
 					"LS_SqlServerTable_source_properties_typeProperties_userName": {
 						"value": "[parameters('LS_SqlServerTable_source_properties_typeProperties_userName')]"
+					},
+					"event_trigger_snowflake_properties_typeProperties_scope": {
+						"value": "[parameters('event_trigger_snowflake_properties_typeProperties_scope')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ADF-VISIONB8-ETL-DEV_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "ADF-VISIONB8-ETL-DEV_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ADF-VISIONB8-ETL-DEV_ArmTemplate_2')]"
 			]
 		}
 	]

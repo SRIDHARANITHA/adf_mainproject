@@ -59,6 +59,12 @@
 		"LS_SFTP_SOURCE_accountKey": {
 			"value": ""
 		},
+		"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_accountKey": {
+			"value": ""
+		},
+		"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE_connectionString": {
+			"value": ""
+		},
 		"LS_SNOWFLAKE_PARQUET_SOURCE_password": {
 			"value": ""
 		},
@@ -146,6 +152,9 @@
 		"LS_SNOWFLAKE_ADLS_parquet_SINK_sasUri": {
 			"value": ""
 		},
+		"LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK_properties_typeProperties_url": {
+			"value": "https://adlsdevvbsource001.dfs.core.windows.net/"
+		},
 		"LS_SNOWFLAKE_PARQUET_SOURCE_properties_typeProperties_database": {
 			"value": "dbazuresnow"
 		},
@@ -166,6 +175,9 @@
 		},
 		"LS_SqlServerTable_source_properties_typeProperties_userName": {
 			"value": "chetan"
+		},
+		"event_trigger_snowflake_properties_typeProperties_scope": {
+			"value": "/subscriptions/caedd375-418d-4b68-9353-44e1076712f2/resourceGroups/VB_DEV_B8_ETL/providers/Microsoft.Storage/storageAccounts/stroageaccountsnowflake"
 		},
 		"containerUri": {
 			"value": ""

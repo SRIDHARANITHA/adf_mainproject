@@ -22,12 +22,215 @@
 		"LS_SqlServerTable_source_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "chetan"
+		},
+		"event_trigger_snowflake_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/caedd375-418d-4b68-9353-44e1076712f2/resourceGroups/VB_DEV_B8_ETL/providers/Microsoft.Storage/storageAccounts/stroageaccountsnowflake"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SNOWFLAKE_ADLS_parquet_SINK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SNOWFLAKE_ADLS_parquet_SINK",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": {
+							"value": "@concat(\n\t'snowflake/',\n\tformatDateTime(utcNow(),'yyyy'),'/',\n\tformatDateTime(utcNow(),'MM'),'/',\n\tformatDateTime(utcNow(),'dd')\n)",
+							"type": "Expression"
+						},
+						"container": "input"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "geolocation_zip_code_prefix",
+						"type": "UTF8"
+					},
+					{
+						"name": "geolocation_lat",
+						"type": "UTF8"
+					},
+					{
+						"name": "geolocation_lng",
+						"type": "UTF8"
+					},
+					{
+						"name": "geolocation_city",
+						"type": "UTF8"
+					},
+					{
+						"name": "geolocation_state",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "input"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "INDEX",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "ORDER_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDER_ITEM_ID",
+						"type": "DECIMAL",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "PRODUCT_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "SELLER_ID",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPING_LIMIT_DATE",
+						"type": "TIMESTAMP_MILLIS"
+					},
+					{
+						"name": "PRICE",
+						"type": "DECIMAL",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "FREIGHT_VALUE",
+						"type": "DECIMAL",
+						"precision": 10,
+						"scale": 2
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SNOWFLAKE_PARQUET_SOURCE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SNOWFLAKE_PARQUET_SOURCE",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SnowflakeV2Table",
+				"schema": [
+					{
+						"name": "INDEX",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "ORDER_ID",
+						"type": "VARCHAR",
+						"precision": 0,
+						"scale": 0
+					},
+					{
+						"name": "ORDER_ITEM_ID",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "PRODUCT_ID",
+						"type": "VARCHAR",
+						"precision": 0,
+						"scale": 0
+					},
+					{
+						"name": "SELLER_ID",
+						"type": "VARCHAR",
+						"precision": 0,
+						"scale": 0
+					},
+					{
+						"name": "SHIPPING_LIMIT_DATE",
+						"type": "TIMESTAMP_NTZ",
+						"precision": 0,
+						"scale": 9
+					},
+					{
+						"name": "PRICE",
+						"type": "NUMBER",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "FREIGHT_VALUE",
+						"type": "NUMBER",
+						"precision": 10,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "AZURE_INTEGRATION",
+					"table": "ORDER_ITEMS_DATASET"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_SQLSERVER_ADLS_SINK')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -565,7 +768,86 @@
 				"annotations": [],
 				"lastPublishTime": "2025-09-09T17:39:52Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_SNOWFLAKE_PARQUET_SOURCE')]",
+				"[concat(variables('factoryId'), '/datasets/DS_SNOWFLAKE_ADLS_parquet_SINK')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_SNOWFLAKE_EVENT_TRIGGER_CPY')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CPY_SNOWFLAKE_EVENT_TRIGGER",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFileName": "*.parquet",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "ParquetReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SOURCE')]",
+				"[concat(variables('factoryId'), '/datasets/DS_SNOWFLAKE_EVENT_TRIGGER__BLOB_ADLS_SINK')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_SqlServerTable_source')]",
@@ -786,6 +1068,36 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PL_CSV')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_EXCEL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/event_trigger_snowflake')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PL_SNOWFLAKE_EVENT_TRIGGER_CPY",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/input/blobs/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('event_trigger_snowflake_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_SNOWFLAKE_EVENT_TRIGGER_CPY')]"
 			]
 		},
 		{
@@ -1054,74 +1366,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PL3_CLOUDSG_CSV_EXCEL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL1_MASTER')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "SET_VAR_TRIGGER",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "Trigger_variable",
-							"value": {
-								"value": "@if(equals(pipeline().parameters.Trigger, null),pipeline().TriggerName,pipeline().parameters.Trigger)",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "EXEC_RAW_DATA",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "SET_VAR_TRIGGER",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL2_RAW_DATA",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"Trigger": {
-						"type": "string"
-					}
-				},
-				"variables": {
-					"Trigger_variable": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-09-04T19:04:15Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL2_RAW_DATA')]"
 			]
 		}
 	]
