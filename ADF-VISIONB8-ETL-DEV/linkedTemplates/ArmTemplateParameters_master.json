@@ -20,6 +20,9 @@
 		"LS_ADLS_GENERAL_SINK_accountKey": {
 			"value": ""
 		},
+		"LS_ADLS_GENERAL_SOURCE_accountKey": {
+			"value": ""
+		},
 		"LS_AZURESQL_DBFILES_SOURCE_password": {
 			"value": ""
 		},
@@ -105,6 +108,9 @@
 			"value": "https://adlsdevvbsource001.dfs.core.windows.net/"
 		},
 		"LS_ADLS_GENERAL_SINK_properties_typeProperties_url": {
+			"value": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
+		},
+		"LS_ADLS_GENERAL_SOURCE_properties_typeProperties_url": {
 			"value": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
 		},
 		"LS_AZURESQL_DBFILES_SOURCE_properties_typeProperties_server": {

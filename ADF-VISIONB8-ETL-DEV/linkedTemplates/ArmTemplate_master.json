@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_ADLS_GENERAL_SINK'"
 		},
+		"LS_ADLS_GENERAL_SOURCE_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_ADLS_GENERAL_SOURCE'"
+		},
 		"LS_AZURESQL_DBFILES_SOURCE_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_AZURESQL_DBFILES_SOURCE'"
@@ -140,6 +144,10 @@
 			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
 		},
 		"LS_ADLS_GENERAL_SINK_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
+		},
+		"LS_ADLS_GENERAL_SOURCE_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
 		},
@@ -325,6 +333,9 @@
 					"LS_ADLS_GENERAL_SINK_accountKey": {
 						"value": "[parameters('LS_ADLS_GENERAL_SINK_accountKey')]"
 					},
+					"LS_ADLS_GENERAL_SOURCE_accountKey": {
+						"value": "[parameters('LS_ADLS_GENERAL_SOURCE_accountKey')]"
+					},
 					"LS_AZURESQL_DBFILES_SOURCE_password": {
 						"value": "[parameters('LS_AZURESQL_DBFILES_SOURCE_password')]"
 					},
@@ -367,9 +378,6 @@
 					"LS_JSON_PARQUET_ADLS_SOURCE_accountKey": {
 						"value": "[parameters('LS_JSON_PARQUET_ADLS_SOURCE_accountKey')]"
 					},
-					"LS_RESTAPI_ADLS_PARQUET_SINK_accountKey": {
-						"value": "[parameters('LS_RESTAPI_ADLS_PARQUET_SINK_accountKey')]"
-					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -384,6 +392,9 @@
 					},
 					"LS_ADLS_GENERAL_SINK_properties_typeProperties_url": {
 						"value": "[parameters('LS_ADLS_GENERAL_SINK_properties_typeProperties_url')]"
+					},
+					"LS_ADLS_GENERAL_SOURCE_properties_typeProperties_url": {
+						"value": "[parameters('LS_ADLS_GENERAL_SOURCE_properties_typeProperties_url')]"
 					},
 					"LS_AZURESQL_DBFILES_SOURCE_properties_typeProperties_server": {
 						"value": "[parameters('LS_AZURESQL_DBFILES_SOURCE_properties_typeProperties_server')]"
@@ -444,9 +455,6 @@
 					},
 					"LS_JSON_PARQUET_ADLS_SOURCE_properties_typeProperties_url": {
 						"value": "[parameters('LS_JSON_PARQUET_ADLS_SOURCE_properties_typeProperties_url')]"
-					},
-					"LS_RESTAPI_ADLS_PARQUET_SINK_properties_typeProperties_url": {
-						"value": "[parameters('LS_RESTAPI_ADLS_PARQUET_SINK_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -465,6 +473,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_RESTAPI_ADLS_PARQUET_SINK_accountKey": {
+						"value": "[parameters('LS_RESTAPI_ADLS_PARQUET_SINK_accountKey')]"
 					},
 					"LS_SFTP_PARQUET_SINK_accountKey": {
 						"value": "[parameters('LS_SFTP_PARQUET_SINK_accountKey')]"
@@ -489,6 +500,9 @@
 					},
 					"LS_SQLSERVER_PARQUET_SINK_accountKey": {
 						"value": "[parameters('LS_SQLSERVER_PARQUET_SINK_accountKey')]"
+					},
+					"LS_RESTAPI_ADLS_PARQUET_SINK_properties_typeProperties_url": {
+						"value": "[parameters('LS_RESTAPI_ADLS_PARQUET_SINK_properties_typeProperties_url')]"
 					},
 					"LS_RESTAPI_SOURCE_properties_typeProperties_url": {
 						"value": "[parameters('LS_RESTAPI_SOURCE_properties_typeProperties_url')]"
