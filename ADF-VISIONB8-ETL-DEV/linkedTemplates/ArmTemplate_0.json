@@ -11,9 +11,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
+		"AzureDataLakeStorage2_SINK_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2_SINK'"
+		},
+		"AzureDataLakeStorage2_SOURCE_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2_SOURCE'"
+		},
 		"DS_SQLSERVER_ADLS_SINK_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'DS_SQLSERVER_ADLS_SINK'"
+		},
+		"LS_ADLS_GENERAL_SINK_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_ADLS_GENERAL_SINK'"
 		},
 		"LS_AZURESQL_DBFILES_SOURCE_password": {
 			"type": "secureString",
@@ -22,6 +34,10 @@
 		"LS_AZURE_SQLDB_SOURCE_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_AZURE_SQLDB_SOURCE'"
+		},
+		"LS_AZURE_SQL_DB_LKP_CSV_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_AZURE_SQL_DB_LKP_CSV'"
 		},
 		"LS_BULK_CSV_SOURCE_accountKey": {
 			"type": "secureString",
@@ -71,21 +87,25 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_RESTAPI_ADLS_PARQUET_SINK'"
 		},
-		"LS_SFTP_PARQUET_SINK_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_SFTP_PARQUET_SINK'"
-		},
-		"LS_SFTP_SOURCE_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_SFTP_SOURCE'"
-		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
 		},
+		"AzureDataLakeStorage2_SINK_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_SOURCE_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
+		},
 		"DS_SQLSERVER_ADLS_SINK_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
+		},
+		"LS_ADLS_GENERAL_SINK_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
 		},
 		"LS_AZURESQL_DBFILES_SOURCE_properties_typeProperties_server": {
 			"type": "string",
@@ -108,6 +128,18 @@
 			"defaultValue": "sql-db-vb-dev"
 		},
 		"LS_AZURE_SQLDB_SOURCE_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "access-data-dev"
+		},
+		"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-srvr-vb-dev2.database.windows.net"
+		},
+		"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sql-db-vb-dev"
+		},
+		"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "access-data-dev"
 		},
@@ -158,22 +190,6 @@
 		"LS_RESTAPI_ADLS_PARQUET_SINK_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
-		},
-		"LS_RESTAPI_SOURCE_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://retoolapi.dev/WNDyhS/data"
-		},
-		"LS_SFTP_PARQUET_SINK_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
-		},
-		"LS_SFTP_SOURCE_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
-		},
-		"LS_SNOWFLAKE_ADLS_parquet_SINK_sasUri": {
-			"type": "secureString",
-			"metadata": "Secure string for 'sasUri' of 'LS_SNOWFLAKE_ADLS_parquet_SINK'"
 		}
 	},
 	"variables": {
@@ -198,6 +214,40 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage2_SINK')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage2_SINK_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage2_SINK_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage2_SOURCE')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage2_SOURCE_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage2_SOURCE_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_SQLSERVER_ADLS_SINK')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -209,6 +259,23 @@
 					"accountKey": {
 						"type": "SecureString",
 						"value": "[parameters('DS_SQLSERVER_ADLS_SINK_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_ADLS_GENERAL_SINK')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('LS_ADLS_GENERAL_SINK_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('LS_ADLS_GENERAL_SINK_accountKey')]"
 					}
 				}
 			},
@@ -253,6 +320,28 @@
 					"password": {
 						"type": "SecureString",
 						"value": "[parameters('LS_AZURE_SQLDB_SOURCE_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_AZURE_SQL_DB_LKP_CSV')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_server')]",
+					"database": "[parameters('LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('LS_AZURE_SQL_DB_LKP_CSV_password')]"
 					}
 				}
 			},
@@ -458,68 +547,6 @@
 						"type": "SecureString",
 						"value": "[parameters('LS_RESTAPI_ADLS_PARQUET_SINK_accountKey')]"
 					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_RESTAPI_SOURCE')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('LS_RESTAPI_SOURCE_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": false,
-					"authenticationType": "Anonymous"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_SFTP_PARQUET_SINK')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('LS_SFTP_PARQUET_SINK_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('LS_SFTP_PARQUET_SINK_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_SFTP_SOURCE')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('LS_SFTP_SOURCE_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('LS_SFTP_SOURCE_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_SNOWFLAKE_ADLS_parquet_SINK')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"sasUri": "[parameters('LS_SNOWFLAKE_ADLS_parquet_SINK_sasUri')]"
 				}
 			},
 			"dependsOn": []
