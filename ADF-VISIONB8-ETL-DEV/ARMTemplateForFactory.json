@@ -876,11 +876,6 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"parameters": {
-					"Trigger": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
 				"lastPublishTime": "2025-09-04T19:04:13Z"
 			},
@@ -2127,7 +2122,8 @@
 						"folderPath": {
 							"value": "@concat(\n    'csv/',\n    formatDateTime(utcNow(),'yyyy'),'/',\n    formatDateTime(utcNow(),'MM'),'/',\n    formatDateTime(utcNow(),'dd')\n)",
 							"type": "Expression"
-						}
+						},
+						"fileSystem": "input"
 					},
 					"compressionCodec": "snappy"
 				},
