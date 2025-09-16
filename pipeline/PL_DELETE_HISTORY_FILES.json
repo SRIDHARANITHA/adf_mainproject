@@ -19,7 +19,9 @@
 						"referenceName": "DelimitedText2_CS_DELETE",
 						"type": "DatasetReference"
 					},
-					"fieldList": [],
+					"fieldList": [
+						"childItems"
+					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
 						"modifiedDatetimeStart": {
