@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'DS_SQLSERVER_ADLS_SINK'"
 		},
+		"DelimitedText2_CS_DELETE_ADLS_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'DelimitedText2_CS_DELETE_ADLS'"
+		},
 		"LS_ADLS_GENERAL_SINK_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_ADLS_GENERAL_SINK'"
@@ -83,10 +87,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_JSON_PARQUET_ADLS_SINK'"
 		},
-		"LS_JSON_PARQUET_ADLS_SOURCE_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_JSON_PARQUET_ADLS_SOURCE'"
-		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
@@ -102,6 +102,10 @@
 		"DS_SQLSERVER_ADLS_SINK_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
+		},
+		"DelimitedText2_CS_DELETE_ADLS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
 		},
 		"LS_ADLS_GENERAL_SINK_properties_typeProperties_url": {
 			"type": "string",
@@ -186,10 +190,6 @@
 		"LS_JSON_PARQUET_ADLS_SINK_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
-		},
-		"LS_JSON_PARQUET_ADLS_SOURCE_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
@@ -259,6 +259,23 @@
 					"accountKey": {
 						"type": "SecureString",
 						"value": "[parameters('DS_SQLSERVER_ADLS_SINK_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2_CS_DELETE_ADLS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('DelimitedText2_CS_DELETE_ADLS_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('DelimitedText2_CS_DELETE_ADLS_accountKey')]"
 					}
 				}
 			},
@@ -529,23 +546,6 @@
 					"accountKey": {
 						"type": "SecureString",
 						"value": "[parameters('LS_JSON_PARQUET_ADLS_SINK_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_JSON_PARQUET_ADLS_SOURCE')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('LS_JSON_PARQUET_ADLS_SOURCE_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('LS_JSON_PARQUET_ADLS_SOURCE_accountKey')]"
 					}
 				}
 			},

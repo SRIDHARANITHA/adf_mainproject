@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'DS_SQLSERVER_ADLS_SINK'"
 		},
+		"DelimitedText2_CS_DELETE_ADLS_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'DelimitedText2_CS_DELETE_ADLS'"
+		},
 		"LS_ADLS_GENERAL_SINK_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_ADLS_GENERAL_SINK'"
@@ -142,6 +146,10 @@
 		"DS_SQLSERVER_ADLS_SINK_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvbsource001.dfs.core.windows.net/"
+		},
+		"DelimitedText2_CS_DELETE_ADLS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
 		},
 		"LS_ADLS_GENERAL_SINK_properties_typeProperties_url": {
 			"type": "string",
@@ -330,6 +338,9 @@
 					"DS_SQLSERVER_ADLS_SINK_accountKey": {
 						"value": "[parameters('DS_SQLSERVER_ADLS_SINK_accountKey')]"
 					},
+					"DelimitedText2_CS_DELETE_ADLS_accountKey": {
+						"value": "[parameters('DelimitedText2_CS_DELETE_ADLS_accountKey')]"
+					},
 					"LS_ADLS_GENERAL_SINK_accountKey": {
 						"value": "[parameters('LS_ADLS_GENERAL_SINK_accountKey')]"
 					},
@@ -375,9 +386,6 @@
 					"LS_JSON_PARQUET_ADLS_SINK_accountKey": {
 						"value": "[parameters('LS_JSON_PARQUET_ADLS_SINK_accountKey')]"
 					},
-					"LS_JSON_PARQUET_ADLS_SOURCE_accountKey": {
-						"value": "[parameters('LS_JSON_PARQUET_ADLS_SOURCE_accountKey')]"
-					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -389,6 +397,9 @@
 					},
 					"DS_SQLSERVER_ADLS_SINK_properties_typeProperties_url": {
 						"value": "[parameters('DS_SQLSERVER_ADLS_SINK_properties_typeProperties_url')]"
+					},
+					"DelimitedText2_CS_DELETE_ADLS_properties_typeProperties_url": {
+						"value": "[parameters('DelimitedText2_CS_DELETE_ADLS_properties_typeProperties_url')]"
 					},
 					"LS_ADLS_GENERAL_SINK_properties_typeProperties_url": {
 						"value": "[parameters('LS_ADLS_GENERAL_SINK_properties_typeProperties_url')]"
@@ -452,9 +463,6 @@
 					},
 					"LS_JSON_PARQUET_ADLS_SINK_properties_typeProperties_url": {
 						"value": "[parameters('LS_JSON_PARQUET_ADLS_SINK_properties_typeProperties_url')]"
-					},
-					"LS_JSON_PARQUET_ADLS_SOURCE_properties_typeProperties_url": {
-						"value": "[parameters('LS_JSON_PARQUET_ADLS_SOURCE_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -473,6 +481,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_JSON_PARQUET_ADLS_SOURCE_accountKey": {
+						"value": "[parameters('LS_JSON_PARQUET_ADLS_SOURCE_accountKey')]"
 					},
 					"LS_RESTAPI_ADLS_PARQUET_SINK_accountKey": {
 						"value": "[parameters('LS_RESTAPI_ADLS_PARQUET_SINK_accountKey')]"
@@ -500,6 +511,9 @@
 					},
 					"LS_SQLSERVER_PARQUET_SINK_accountKey": {
 						"value": "[parameters('LS_SQLSERVER_PARQUET_SINK_accountKey')]"
+					},
+					"LS_JSON_PARQUET_ADLS_SOURCE_properties_typeProperties_url": {
+						"value": "[parameters('LS_JSON_PARQUET_ADLS_SOURCE_properties_typeProperties_url')]"
 					},
 					"LS_RESTAPI_ADLS_PARQUET_SINK_properties_typeProperties_url": {
 						"value": "[parameters('LS_RESTAPI_ADLS_PARQUET_SINK_properties_typeProperties_url')]"
@@ -585,6 +599,26 @@
 					},
 					"event_trigger_snowflake_properties_typeProperties_scope": {
 						"value": "[parameters('event_trigger_snowflake_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ADF-VISIONB8-ETL-DEV_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "ADF-VISIONB8-ETL-DEV_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"Tr_sample_csv_properties_PL1_MASTER_parameters_Trigger": {
 						"value": "[parameters('Tr_sample_csv_properties_PL1_MASTER_parameters_Trigger')]"
@@ -592,7 +626,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'ADF-VISIONB8-ETL-DEV_ArmTemplate_2')]"
+				"[resourceId('Microsoft.Resources/deployments', 'ADF-VISIONB8-ETL-DEV_ArmTemplate_3')]"
 			]
 		}
 	]

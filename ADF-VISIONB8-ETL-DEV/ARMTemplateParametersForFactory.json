@@ -17,6 +17,9 @@
 		"DS_SQLSERVER_ADLS_SINK_accountKey": {
 			"value": ""
 		},
+		"DelimitedText2_CS_DELETE_ADLS_accountKey": {
+			"value": ""
+		},
 		"LS_ADLS_GENERAL_SINK_accountKey": {
 			"value": ""
 		},
@@ -106,6 +109,9 @@
 		},
 		"DS_SQLSERVER_ADLS_SINK_properties_typeProperties_url": {
 			"value": "https://adlsdevvbsource001.dfs.core.windows.net/"
+		},
+		"DelimitedText2_CS_DELETE_ADLS_properties_typeProperties_url": {
+			"value": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
 		},
 		"LS_ADLS_GENERAL_SINK_properties_typeProperties_url": {
 			"value": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
