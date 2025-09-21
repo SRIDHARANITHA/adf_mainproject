@@ -7,6 +7,22 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ADF-VISIONB8-ETL-DEV"
 		},
+		"LS_SqlServerTable_source_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_SqlServerTable_source'"
+		},
+		"LS_SqlServerTable_source_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "SRIDHAR"
+		},
+		"LS_SqlServerTable_source_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "vbadevproject"
+		},
+		"LS_SqlServerTable_source_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "chetan"
+		},
 		"event_trigger_snowflake_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/caedd375-418d-4b68-9353-44e1076712f2/resourceGroups/VB_DEV_B8_ETL/providers/Microsoft.Storage/storageAccounts/stroageaccountsnowflake"
@@ -16,6 +32,79 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_w5f')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage2_SOURCE",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "input"
+					},
+					"columnDelimiter": ",",
+					"rowDelimiter": "\n",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "order_id",
+						"type": "String"
+					},
+					{
+						"name": "payment_sequential",
+						"type": "String"
+					},
+					{
+						"name": "payment_type",
+						"type": "String"
+					},
+					{
+						"name": "payment_installments",
+						"type": "String"
+					},
+					{
+						"name": "payment_value",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_SqlServerTable_source')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('LS_SqlServerTable_source_properties_typeProperties_server')]",
+					"database": "[parameters('LS_SqlServerTable_source_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('LS_SqlServerTable_source_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('LS_SqlServerTable_source_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "SelfhostedintegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_ADLS_ADLS_NRW_FILES')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -1389,7 +1478,9 @@
 					"table": "olist_orders_dataset"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SqlServerTable_source')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_SQL_PARQUET')]",
@@ -1596,7 +1687,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -1746,225 +1837,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PL_SWITCH_CSV_EXCEL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL2_RAW_DATA')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "LKUP_L2_TYPE",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "SELECT DISTINCT L2_switch_type \nFROM dbo.vb_tbl_job a\nJOIN dbo.vb_tbl_trigger b ON a.trigger_id = b.trigger_id\nWHERE b.trigger_name = '@{pipeline().parameters.Trigger}'",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "DS_AZURESQL_DB_SOURCE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "SWITCH_SOURCE",
-						"type": "Switch",
-						"dependsOn": [
-							{
-								"activity": "LKUP_L2_TYPE",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"on": {
-								"value": "@activity('LKUP_L2_TYPE').output.firstRow.L2_switch_type",
-								"type": "Expression"
-							},
-							"cases": [
-								{
-									"value": "CloudStorage",
-									"activities": [
-										{
-											"name": "EXEC_PL3_CLOUD",
-											"type": "ExecutePipeline",
-											"dependsOn": [],
-											"policy": {
-												"secureInput": false
-											},
-											"userProperties": [],
-											"typeProperties": {
-												"pipeline": {
-													"referenceName": "PL3_CLOUDSG_CSV_EXCEL",
-													"type": "PipelineReference"
-												},
-												"waitOnCompletion": true,
-												"parameters": {
-													"Trigger": {
-														"value": "@pipeline().parameters.Trigger",
-														"type": "Expression"
-													}
-												}
-											}
-										}
-									]
-								},
-								{
-									"value": "sqlserver",
-									"activities": [
-										{
-											"name": "Wait1",
-											"type": "Wait",
-											"dependsOn": [],
-											"userProperties": [],
-											"typeProperties": {
-												"waitTimeInSeconds": 1
-											}
-										}
-									]
-								},
-								{
-									"value": "sftp",
-									"activities": [
-										{
-											"name": "Wait2",
-											"type": "Wait",
-											"dependsOn": [],
-											"userProperties": [],
-											"typeProperties": {
-												"waitTimeInSeconds": 1
-											}
-										}
-									]
-								},
-								{
-									"value": "restapi",
-									"activities": [
-										{
-											"name": "Wait3",
-											"type": "Wait",
-											"dependsOn": [],
-											"userProperties": [],
-											"typeProperties": {
-												"waitTimeInSeconds": 1
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"Trigger": {
-						"type": "string"
-					}
-				},
-				"variables": {
-					"Mapping": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-09-04T19:04:15Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL3_CLOUDSG_CSV_EXCEL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL1_MASTER')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "SET_VAR_TRIGGER",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "Trigger_variable",
-							"value": {
-								"value": "@if(equals(pipeline().parameters.Trigger, null),pipeline().TriggerName,pipeline().parameters.Trigger)",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "EXEC_RAW_DATA",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "SET_VAR_TRIGGER",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL2_RAW_DATA",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"Trigger": {
-									"value": "@pipeline().parameters.Trigger",
-									"type": "Expression"
-								}
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"Trigger": {
-						"type": "string"
-					}
-				},
-				"variables": {
-					"Trigger_variable": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-09-04T19:04:15Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL2_RAW_DATA')]"
 			]
 		}
 	]

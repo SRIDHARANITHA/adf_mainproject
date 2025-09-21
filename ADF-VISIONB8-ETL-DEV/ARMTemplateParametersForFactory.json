@@ -14,6 +14,9 @@
 		"AzureDataLakeStorage2_SOURCE_accountKey": {
 			"value": ""
 		},
+		"AzureDatabricks1_accessToken": {
+			"value": ""
+		},
 		"DS_SQLSERVER_ADLS_SINK_accountKey": {
 			"value": ""
 		},
@@ -106,6 +109,9 @@
 		},
 		"AzureDataLakeStorage2_SOURCE_properties_typeProperties_url": {
 			"value": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"value": "0921-092203-h9oa7ad4"
 		},
 		"DS_SQLSERVER_ADLS_SINK_properties_typeProperties_url": {
 			"value": "https://adlsdevvbsource001.dfs.core.windows.net/"

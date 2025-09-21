@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2_SOURCE'"
 		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
 		"DS_SQLSERVER_ADLS_SINK_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'DS_SQLSERVER_ADLS_SINK'"
@@ -142,6 +146,10 @@
 		"AzureDataLakeStorage2_SOURCE_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0921-092203-h9oa7ad4"
 		},
 		"DS_SQLSERVER_ADLS_SINK_properties_typeProperties_url": {
 			"type": "string",
@@ -335,6 +343,9 @@
 					"AzureDataLakeStorage2_SOURCE_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage2_SOURCE_accountKey')]"
 					},
+					"AzureDatabricks1_accessToken": {
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
 					"DS_SQLSERVER_ADLS_SINK_accountKey": {
 						"value": "[parameters('DS_SQLSERVER_ADLS_SINK_accountKey')]"
 					},
@@ -383,9 +394,6 @@
 					"LS_JSON_ADLS_SOURCE_accountKey": {
 						"value": "[parameters('LS_JSON_ADLS_SOURCE_accountKey')]"
 					},
-					"LS_JSON_PARQUET_ADLS_SINK_accountKey": {
-						"value": "[parameters('LS_JSON_PARQUET_ADLS_SINK_accountKey')]"
-					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -394,6 +402,9 @@
 					},
 					"AzureDataLakeStorage2_SOURCE_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage2_SOURCE_properties_typeProperties_url')]"
+					},
+					"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks1_properties_typeProperties_existingClusterId')]"
 					},
 					"DS_SQLSERVER_ADLS_SINK_properties_typeProperties_url": {
 						"value": "[parameters('DS_SQLSERVER_ADLS_SINK_properties_typeProperties_url')]"
@@ -460,9 +471,6 @@
 					},
 					"LS_JSON_ADLS_SOURCE_properties_typeProperties_url": {
 						"value": "[parameters('LS_JSON_ADLS_SOURCE_properties_typeProperties_url')]"
-					},
-					"LS_JSON_PARQUET_ADLS_SINK_properties_typeProperties_url": {
-						"value": "[parameters('LS_JSON_PARQUET_ADLS_SINK_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -481,6 +489,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_JSON_PARQUET_ADLS_SINK_accountKey": {
+						"value": "[parameters('LS_JSON_PARQUET_ADLS_SINK_accountKey')]"
 					},
 					"LS_JSON_PARQUET_ADLS_SOURCE_accountKey": {
 						"value": "[parameters('LS_JSON_PARQUET_ADLS_SOURCE_accountKey')]"
@@ -511,6 +522,9 @@
 					},
 					"LS_SQLSERVER_PARQUET_SINK_accountKey": {
 						"value": "[parameters('LS_SQLSERVER_PARQUET_SINK_accountKey')]"
+					},
+					"LS_JSON_PARQUET_ADLS_SINK_properties_typeProperties_url": {
+						"value": "[parameters('LS_JSON_PARQUET_ADLS_SINK_properties_typeProperties_url')]"
 					},
 					"LS_JSON_PARQUET_ADLS_SOURCE_properties_typeProperties_url": {
 						"value": "[parameters('LS_JSON_PARQUET_ADLS_SOURCE_properties_typeProperties_url')]"
@@ -564,18 +578,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"LS_SqlServerTable_source_password": {
-						"value": "[parameters('LS_SqlServerTable_source_password')]"
-					},
-					"LS_SqlServerTable_source_properties_typeProperties_server": {
-						"value": "[parameters('LS_SqlServerTable_source_properties_typeProperties_server')]"
-					},
-					"LS_SqlServerTable_source_properties_typeProperties_database": {
-						"value": "[parameters('LS_SqlServerTable_source_properties_typeProperties_database')]"
-					},
-					"LS_SqlServerTable_source_properties_typeProperties_userName": {
-						"value": "[parameters('LS_SqlServerTable_source_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -596,6 +598,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_SqlServerTable_source_password": {
+						"value": "[parameters('LS_SqlServerTable_source_password')]"
+					},
+					"LS_SqlServerTable_source_properties_typeProperties_server": {
+						"value": "[parameters('LS_SqlServerTable_source_properties_typeProperties_server')]"
+					},
+					"LS_SqlServerTable_source_properties_typeProperties_database": {
+						"value": "[parameters('LS_SqlServerTable_source_properties_typeProperties_database')]"
+					},
+					"LS_SqlServerTable_source_properties_typeProperties_userName": {
+						"value": "[parameters('LS_SqlServerTable_source_properties_typeProperties_userName')]"
 					},
 					"event_trigger_snowflake_properties_typeProperties_scope": {
 						"value": "[parameters('event_trigger_snowflake_properties_typeProperties_scope')]"
