@@ -1,0 +1,39 @@
+{
+	"name": "DS_AzureSqlTable_SCDTYPE2_SINK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureSqlTable_SCDTYPE2_SINK",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "empdi",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "empname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "gender",
+				"type": "nvarchar"
+			},
+			{
+				"name": "country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IsActive",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "table_employee"
+		}
+	}
+}
