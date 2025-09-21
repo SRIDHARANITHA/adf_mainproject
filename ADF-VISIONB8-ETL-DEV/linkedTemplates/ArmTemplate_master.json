@@ -51,6 +51,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_AZURE_SQL_DB_LKP_CSV'"
 		},
+		"LS_AzureSqlTable_SCDTYPE2_SINK_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_AzureSqlTable_SCDTYPE2_SINK'"
+		},
 		"LS_BULK_CSV_SOURCE_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_BULK_CSV_SOURCE'"
@@ -98,6 +102,10 @@
 		"LS_RESTAPI_ADLS_PARQUET_SINK_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_RESTAPI_ADLS_PARQUET_SINK'"
+		},
+		"LS_SCCDTYPE_ADLS_SOURCE_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_SCCDTYPE_ADLS_SOURCE'"
 		},
 		"LS_SFTP_PARQUET_SINK_accountKey": {
 			"type": "secureString",
@@ -203,6 +211,18 @@
 			"type": "string",
 			"defaultValue": "access-data-dev"
 		},
+		"LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-srvr-vb-dev2.database.windows.net"
+		},
+		"LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sql-db-vb-dev"
+		},
+		"LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "access-data-dev"
+		},
 		"LS_BULK_CSV_SOURCE_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
@@ -254,6 +274,10 @@
 		"LS_RESTAPI_SOURCE_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://retoolapi.dev/WNDyhS/data"
+		},
+		"LS_SCCDTYPE_ADLS_SOURCE_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
 		},
 		"LS_SFTP_PARQUET_SINK_properties_typeProperties_url": {
 			"type": "string",
@@ -367,6 +391,9 @@
 					"LS_AZURE_SQL_DB_LKP_CSV_password": {
 						"value": "[parameters('LS_AZURE_SQL_DB_LKP_CSV_password')]"
 					},
+					"LS_AzureSqlTable_SCDTYPE2_SINK_password": {
+						"value": "[parameters('LS_AzureSqlTable_SCDTYPE2_SINK_password')]"
+					},
 					"LS_BULK_CSV_SOURCE_accountKey": {
 						"value": "[parameters('LS_BULK_CSV_SOURCE_accountKey')]"
 					},
@@ -390,9 +417,6 @@
 					},
 					"LS_EXCEL_PARQUET_ADLS_SINK_accountKey": {
 						"value": "[parameters('LS_EXCEL_PARQUET_ADLS_SINK_accountKey')]"
-					},
-					"LS_JSON_ADLS_SOURCE_accountKey": {
-						"value": "[parameters('LS_JSON_ADLS_SOURCE_accountKey')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
@@ -445,6 +469,15 @@
 					"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_userName": {
 						"value": "[parameters('LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_userName')]"
 					},
+					"LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_server": {
+						"value": "[parameters('LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_server')]"
+					},
+					"LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_database": {
+						"value": "[parameters('LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_database')]"
+					},
+					"LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_userName": {
+						"value": "[parameters('LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_userName')]"
+					},
 					"LS_BULK_CSV_SOURCE_properties_typeProperties_url": {
 						"value": "[parameters('LS_BULK_CSV_SOURCE_properties_typeProperties_url')]"
 					},
@@ -468,9 +501,6 @@
 					},
 					"LS_EXCEL_PARQUET_ADLS_SINK_properties_typeProperties_url": {
 						"value": "[parameters('LS_EXCEL_PARQUET_ADLS_SINK_properties_typeProperties_url')]"
-					},
-					"LS_JSON_ADLS_SOURCE_properties_typeProperties_url": {
-						"value": "[parameters('LS_JSON_ADLS_SOURCE_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -490,6 +520,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"LS_JSON_ADLS_SOURCE_accountKey": {
+						"value": "[parameters('LS_JSON_ADLS_SOURCE_accountKey')]"
+					},
 					"LS_JSON_PARQUET_ADLS_SINK_accountKey": {
 						"value": "[parameters('LS_JSON_PARQUET_ADLS_SINK_accountKey')]"
 					},
@@ -498,6 +531,9 @@
 					},
 					"LS_RESTAPI_ADLS_PARQUET_SINK_accountKey": {
 						"value": "[parameters('LS_RESTAPI_ADLS_PARQUET_SINK_accountKey')]"
+					},
+					"LS_SCCDTYPE_ADLS_SOURCE_accountKey": {
+						"value": "[parameters('LS_SCCDTYPE_ADLS_SOURCE_accountKey')]"
 					},
 					"LS_SFTP_PARQUET_SINK_accountKey": {
 						"value": "[parameters('LS_SFTP_PARQUET_SINK_accountKey')]"
@@ -523,6 +559,9 @@
 					"LS_SQLSERVER_PARQUET_SINK_accountKey": {
 						"value": "[parameters('LS_SQLSERVER_PARQUET_SINK_accountKey')]"
 					},
+					"LS_JSON_ADLS_SOURCE_properties_typeProperties_url": {
+						"value": "[parameters('LS_JSON_ADLS_SOURCE_properties_typeProperties_url')]"
+					},
 					"LS_JSON_PARQUET_ADLS_SINK_properties_typeProperties_url": {
 						"value": "[parameters('LS_JSON_PARQUET_ADLS_SINK_properties_typeProperties_url')]"
 					},
@@ -534,6 +573,9 @@
 					},
 					"LS_RESTAPI_SOURCE_properties_typeProperties_url": {
 						"value": "[parameters('LS_RESTAPI_SOURCE_properties_typeProperties_url')]"
+					},
+					"LS_SCCDTYPE_ADLS_SOURCE_properties_typeProperties_url": {
+						"value": "[parameters('LS_SCCDTYPE_ADLS_SOURCE_properties_typeProperties_url')]"
 					},
 					"LS_SFTP_PARQUET_SINK_properties_typeProperties_url": {
 						"value": "[parameters('LS_SFTP_PARQUET_SINK_properties_typeProperties_url')]"
@@ -610,9 +652,6 @@
 					},
 					"LS_SqlServerTable_source_properties_typeProperties_userName": {
 						"value": "[parameters('LS_SqlServerTable_source_properties_typeProperties_userName')]"
-					},
-					"event_trigger_snowflake_properties_typeProperties_scope": {
-						"value": "[parameters('event_trigger_snowflake_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -633,6 +672,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"event_trigger_snowflake_properties_typeProperties_scope": {
+						"value": "[parameters('event_trigger_snowflake_properties_typeProperties_scope')]"
 					},
 					"Tr_sample_csv_properties_PL1_MASTER_parameters_Trigger": {
 						"value": "[parameters('Tr_sample_csv_properties_PL1_MASTER_parameters_Trigger')]"

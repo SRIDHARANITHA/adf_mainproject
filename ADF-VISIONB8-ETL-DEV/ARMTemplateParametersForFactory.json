@@ -38,6 +38,9 @@
 		"LS_AZURE_SQL_DB_LKP_CSV_password": {
 			"value": ""
 		},
+		"LS_AzureSqlTable_SCDTYPE2_SINK_password": {
+			"value": ""
+		},
 		"LS_BULK_CSV_SOURCE_accountKey": {
 			"value": ""
 		},
@@ -72,6 +75,9 @@
 			"value": ""
 		},
 		"LS_RESTAPI_ADLS_PARQUET_SINK_accountKey": {
+			"value": ""
+		},
+		"LS_SCCDTYPE_ADLS_SOURCE_accountKey": {
 			"value": ""
 		},
 		"LS_SFTP_PARQUET_SINK_accountKey": {
@@ -152,6 +158,15 @@
 		"LS_AZURE_SQL_DB_LKP_CSV_properties_typeProperties_userName": {
 			"value": "access-data-dev"
 		},
+		"LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_server": {
+			"value": "sql-srvr-vb-dev2.database.windows.net"
+		},
+		"LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_database": {
+			"value": "sql-db-vb-dev"
+		},
+		"LS_AzureSqlTable_SCDTYPE2_SINK_properties_typeProperties_userName": {
+			"value": "access-data-dev"
+		},
 		"LS_BULK_CSV_SOURCE_properties_typeProperties_url": {
 			"value": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
 		},
@@ -190,6 +205,9 @@
 		},
 		"LS_RESTAPI_SOURCE_properties_typeProperties_url": {
 			"value": "https://retoolapi.dev/WNDyhS/data"
+		},
+		"LS_SCCDTYPE_ADLS_SOURCE_properties_typeProperties_url": {
+			"value": "https://adlsdevvisionboardraw011.dfs.core.windows.net/"
 		},
 		"LS_SFTP_PARQUET_SINK_properties_typeProperties_url": {
 			"value": "https://adlsdevvbsource001.dfs.core.windows.net/"
